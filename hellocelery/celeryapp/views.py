@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from tasks import fft_random
 def index(request):
-    x = fft_random.delay(10)
+    x = fft_random.delay(1000000)
     print(x.status)
-    print(x.get())
+    # print(x.get())
     return HttpResponse("Hello, world. You're at the polls index.")
