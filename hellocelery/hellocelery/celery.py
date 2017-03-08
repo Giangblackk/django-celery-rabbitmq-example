@@ -4,13 +4,13 @@ from celery import Celery
 from celery.signals import task_success
 import requests
 
-@task_success.connect
-def task_sent_handler(sender=None, headers=None, body=None, **kwargs):
-    # information about task are located in headers for task messages
-    # using the task protocol version 2.
-    print('Task Success')
-    url = 'http://localhost:8000'
-    requests.post(url)
+# @task_success.connect
+# def task_sent_handler(sender=None, headers=None, body=None, **kwargs):
+#     # information about task are located in headers for task messages
+#     # using the task protocol version 2.
+#     print('Task Success')
+#     url = 'http://localhost:8000'
+#     requests.post(url)
 
 from django.conf import settings
 # set the default Django settings module for the 'celery' program.
