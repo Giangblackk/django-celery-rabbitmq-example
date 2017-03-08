@@ -4,7 +4,7 @@ from scipy.fftpack import fft
 from skimage import io
 from hellocelery.celery import app
 import requests
-from celery.signals import task_success
+from celery.signals import task_success, task_revoked
 
 
 @shared_task
@@ -32,23 +32,25 @@ def simple_image_process(file_name):
     return random_number
 
 @shared_task
+# @app.task(bind=True)
+# def test(self, tid, n):
 def test(tid, n):
     for i in range(n):
         x = random.normal(0, 0.1, 2000)
         y = fft(x)
-        if(i%30 == 0):
-            process_percent = int(100 * float(i)/float(n))
-            current_task.update_state(state='PROGRESS',
-                meta={'process_percent': process_percent})
     return random.random()
 
 
 # @task_success.connect(sender='celeryapp.tasks.fft_random')
-@task_success.connect(sender=fft_random)
-def task_id_sent_handler(sender=None, headers=None, body=None, **kwargs):
+@task_success.connect(sender=test)
+def task_id_sent_handler(sender=None, result = None, **kwargs):
     # information about task are located in headers for task messages
     # using the task protocol version 2.
-    print(sender)
+    print(result)
     print('\n ***Task Success***')
     url = 'http://localhost:8000'
     requests.post(url)
+
+# @task_revoked.connect
+# def my_task_revoked_handler(sender=None, body=None, *args,  **kwargs):
+#     print(kwargs['request'].args)
