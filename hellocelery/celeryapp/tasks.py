@@ -1,7 +1,19 @@
-from celery import shared_task, current_task
+from celery import shared_task, current_task, Task
 from numpy import random
 from scipy.fftpack import fft
 from skimage import io
+from hellocelery.celery import app
+import requests
+class NotifierTask(Task):
+    """Task that sends notification on completion."""
+    # def after_return(self, status, retval, task_id, args, kwargs, einfo):
+    def on_success(self, retval, task_id, args, kwargs):
+        print('After Return')
+        url = 'http://localhost:8000'
+        # data = {'clientid': kwargs['clientid'], 'result': retval}
+        requests.post(url)
+
+@app.task(base=NotifierTask)
 @shared_task
 def fft_random(n):
     for i in range(n):
