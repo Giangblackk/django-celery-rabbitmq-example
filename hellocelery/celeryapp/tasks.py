@@ -38,7 +38,10 @@ def test(tid, n):
     for i in range(n):
         x = random.normal(0, 0.1, 2000)
         y = fft(x)
-    return random.random()
+    result = dict()
+    result['x'] = random.random()
+    result['y'] = random.randint(100)
+    return result
 
 
 # @task_success.connect(sender='celeryapp.tasks.fft_random')
@@ -46,6 +49,7 @@ def test(tid, n):
 def task_id_sent_handler(sender=None, result = None, **kwargs):
     # information about task are located in headers for task messages
     # using the task protocol version 2.
+    print(type(result))
     print(result)
     print('\n ***Task Success***')
     url = 'http://localhost:8000'
