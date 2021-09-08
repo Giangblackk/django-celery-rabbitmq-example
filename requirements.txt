@@ -9,11 +9,11 @@ certifi==2017.1.23
 cycler==0.10.0
 dask==0.14.0
 decorator==4.0.11
-Django==1.10.6
+django>=2.2.24
 django-celery==3.2.1
 enum-compat==0.0.2
 enum34==1.1.6
-eventlet==0.20.1
+eventlet>=0.31.0
 flower==0.9.1
 functools32==3.2.3.post2
 futures==3.0.5
@@ -29,7 +29,7 @@ pillow>=8.3.2
 pyparsing==2.2.0
 python-dateutil==2.6.0
 pytz==2016.10
-requests==2.13.0
+requests>=2.20.0
 scikit-image==0.12.3
 scipy==0.18.1
 six==1.10.0
